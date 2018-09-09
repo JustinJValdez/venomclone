@@ -21,9 +21,7 @@ class App extends Component {
           <Dashboard />
         </body>
         <br/>
-        <footer className="Footer">
-          <Footer />
-        </footer>
+        
       </div>
     );
   }

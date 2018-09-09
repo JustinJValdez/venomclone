@@ -32,14 +32,30 @@ class Dashboard extends Component {
         console.log(e.target.name)
         console.log(e.target.value)
     }
-    handleSubmit(e){
-        axios.post('/api/tickets', this.state)
+    handleSubmit(e) {
+        const ticket = {
+            seat: this.state.seat,
+            name: this.state.name,
+            tickets: this.state.tickets
+        }
+        
+        let tempTotal=this.state.total.slice()
+        tempTotal.push(ticket)
+        console.log(tempTotal)
+        this.setState({
+        total: tempTotal
+        })
+    }
+/*axios.post('/api/tickets', this.state)
           .then((response)=>{
             console.log(response.data)
-     })
-        }
+        }*/
 
     render() {
+       let ticketItems= this.state.total.map((ticket,index)=>{
+           return (<p key={index}>{`Reservation for ${ticket.name} ${ticket.tickets} ${ticket.seat}`}</p>)
+       })
+        
         return (
             <div>
                 <h1>Get Your Tickets Now! </h1>
@@ -50,13 +66,15 @@ class Dashboard extends Component {
 
                 <input onClick={this.subtractTickets} type="button" value="-" />
 
-                What seat would you like?(Row A-Z:Seat 1-10)  <input value={this.state.seat} onChange={this.handleChange} name="seat" />
-                <br/>
+                What seats would you like?  <input value={this.state.seat} onChange={this.handleChange} name="seat" />
+                <br />
                 <button onClick={this.handleSubmit}>Submit</button>
-                <br/>
-                Your Tickets {this.state.total}
-
+                <br />
+                <div>{ticketItems}</div>
             
+
+
+
 
             </div>
         )
